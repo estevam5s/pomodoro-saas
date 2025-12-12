@@ -33,9 +33,11 @@ export function Header() {
             FAQ
           </Link>
         </nav>
-        <Button variant="secondary" className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90">
-          Baixar
-        </Button>
+        <Link href="/login">
+          <Button variant="secondary" className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90">
+            Acessar Painel
+          </Button>
+        </Link>
       </div>
     </header>
   )

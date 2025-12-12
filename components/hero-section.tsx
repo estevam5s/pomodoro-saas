@@ -3,6 +3,7 @@ import { InteractiveGrid } from "@/components/ui/interactive-grid"
 import { ShineBorder } from "@/components/ui/shine-border"
 import { Play, Download } from "lucide-react"
 import { PomodoroTimer } from "@/components/pomodoro-timer"
+import Link from "next/link"
 
 export function HeroSection() {
   return (
@@ -30,10 +31,12 @@ export function HeroSection() {
               <Play className="w-4 h-4" />
               Assistir Demo
             </Button>
-            <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90 gap-2">
-              <Download className="w-4 h-4" />
-              Baixar Agora
-            </Button>
+            <Link href="/login">
+              <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90 gap-2">
+                <Download className="w-4 h-4" />
+                Acessar Painel
+              </Button>
+            </Link>
           </div>
         </div>
 
