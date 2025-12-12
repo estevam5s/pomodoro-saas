@@ -18,23 +18,23 @@ export function Header() {
         </div>
         <nav className="hidden md:flex items-center gap-8">
           <Link href="#features" className="text-sm text-gray-300 hover:text-white transition-colors">
-            Features
+            Recursos
           </Link>
           <Link href="#how-it-works" className="text-sm text-gray-300 hover:text-white transition-colors">
-            How It Works
+            Como Funciona
           </Link>
           <Link href="#testimonials" className="text-sm text-gray-300 hover:text-white transition-colors">
-            Testimonials
+            Depoimentos
           </Link>
           <Link href="#pricing" className="text-sm text-gray-300 hover:text-white transition-colors">
-            Pricing
+            Preços
           </Link>
           <Link href="#faq" className="text-sm text-gray-300 hover:text-white transition-colors">
             FAQ
           </Link>
         </nav>
         <Button variant="secondary" className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90">
-          Download
+          Baixar
         </Button>
       </div>
     </header>

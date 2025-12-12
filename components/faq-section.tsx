@@ -6,33 +6,33 @@ import { ChevronDown } from "lucide-react"
 export function FaqSection() {
   const faqs = [
     {
-      question: "What is the Pomodoro Technique?",
+      question: "O que é a Técnica Pomodoro?",
       answer:
-        "The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks. These intervals are known as 'pomodoros'.",
+        "A Técnica Pomodoro é um método de gerenciamento de tempo desenvolvido por Francesco Cirillo no final dos anos 1980. Ela usa um timer para dividir o trabalho em intervalos, tradicionalmente de 25 minutos, separados por pausas curtas. Esses intervalos são conhecidos como 'pomodoros'.",
     },
     {
-      question: "How does FocusTimer help with productivity?",
+      question: "Como o FocusTimer ajuda com produtividade?",
       answer:
-        "FocusTimer implements the Pomodoro Technique with additional features like task management, productivity analytics, and customizable timers. By working in focused sprints and taking regular breaks, you can maintain high concentration levels and avoid burnout.",
+        "FocusTimer implementa a Técnica Pomodoro com recursos adicionais como gerenciamento de tarefas, análise de produtividade e timers personalizáveis. Ao trabalhar em sprints focados e fazer pausas regulares, você pode manter altos níveis de concentração e evitar o esgotamento.",
     },
     {
-      question: "Can I customize the timer durations?",
+      question: "Posso personalizar as durações do timer?",
       answer:
-        "Yes! With the Pro version, you can fully customize both your focus session and break durations to match your personal productivity rhythm.",
+        "Sim! Com a versão Pro, você pode personalizar completamente as durações de suas sessões de foco e pausas para combinar com seu ritmo pessoal de produtividade.",
     },
     {
-      question: "Is FocusTimer available on mobile devices?",
+      question: "O FocusTimer está disponível em dispositivos móveis?",
       answer:
-        "Yes, FocusTimer is available for iOS and Android, as well as desktop applications for Windows and macOS. Your data syncs across all your devices.",
+        "Sim, FocusTimer está disponível para iOS e Android, assim como aplicativos desktop para Windows e macOS. Seus dados sincronizam em todos os seus dispositivos.",
     },
     {
-      question: "How does the website blocker work?",
+      question: "Como funciona o bloqueador de sites?",
       answer:
-        "The website blocker (available in Pro) allows you to create a list of distracting websites that will be automatically blocked during your focus sessions, helping you stay on task.",
+        "O bloqueador de sites (disponível no Pro) permite que você crie uma lista de sites que distraem e que serão automaticamente bloqueados durante suas sessões de foco, ajudando você a manter o foco.",
     },
     {
-      question: "Can I export my productivity data?",
-      answer: "Yes, Pro users can export their productivity data in CSV format for further analysis or record-keeping.",
+      question: "Posso exportar meus dados de produtividade?",
+      answer: "Sim, usuários Pro podem exportar seus dados de produtividade em formato CSV para análise adicional ou manutenção de registros.",
     },
   ]
 
@@ -45,9 +45,9 @@ export function FaqSection() {
   return (
     <section id="faq" className="py-16 px-6 bg-black/50">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center">Frequently Asked Questions</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">Perguntas Frequentes</h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Have questions about FocusTimer? Find answers to common questions below.
+          Tem dúvidas sobre o FocusTimer? Encontre respostas para perguntas comuns abaixo.
         </p>
 
         <div className="space-y-4">

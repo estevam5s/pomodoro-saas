@@ -93,7 +93,7 @@ export function PomodoroTimer() {
           <div className="text-5xl font-bold">
             {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
           </div>
-          <div className="text-sm text-gray-400 mt-2 capitalize">{mode} Time</div>
+          <div className="text-sm text-gray-400 mt-2 capitalize">{mode === "focus" ? "Tempo de Foco" : "Tempo de Pausa"}</div>
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export function PomodoroTimer() {
           className={mode === "focus" ? "bg-red-500 hover:bg-red-600" : "border-white/10 bg-white/5 hover:bg-white/10"}
           onClick={() => switchMode("focus")}
         >
-          Focus
+          Foco
         </Button>
         <Button
           variant={mode === "break" ? "default" : "outline"}
@@ -133,7 +133,7 @@ export function PomodoroTimer() {
           }
           onClick={() => switchMode("break")}
         >
-          Break
+          Pausa
         </Button>
       </div>
     </div>

@@ -5,30 +5,30 @@ export function TestimonialsSection() {
   const testimonials = [
     {
       name: "Sarah Johnson",
-      role: "UX Designer",
+      role: "Designer UX",
       quote:
-        "FocusTimer has completely transformed my workday. I'm getting more done in less time and feeling less stressed.",
+        "FocusTimer transformou completamente meu dia de trabalho. Estou fazendo mais em menos tempo e me sentindo menos estressada.",
       avatar: "/placeholder.svg?height=64&width=64",
     },
     {
       name: "Michael Chen",
-      role: "Software Developer",
+      role: "Desenvolvedor de Software",
       quote:
-        "As a developer, staying in flow state is crucial. The Pomodoro technique with FocusTimer helps me maintain deep focus when coding.",
+        "Como desenvolvedor, manter o estado de fluxo é crucial. A técnica Pomodoro com FocusTimer me ajuda a manter o foco profundo ao codificar.",
       avatar: "/placeholder.svg?height=64&width=64",
     },
     {
       name: "Emily Rodriguez",
-      role: "Content Writer",
+      role: "Redatora de Conteúdo",
       quote:
-        "I've tried many productivity apps, but FocusTimer is the only one that's stuck. The simple interface and powerful analytics keep me motivated.",
+        "Já tentei muitos aplicativos de produtividade, mas o FocusTimer é o único que funcionou. A interface simples e análises poderosas me mantêm motivada.",
       avatar: "/placeholder.svg?height=64&width=64",
     },
     {
       name: "David Kim",
-      role: "Marketing Manager",
+      role: "Gerente de Marketing",
       quote:
-        "Managing multiple projects is easier with FocusTimer. I can dedicate focused time to each task and track my productivity across projects.",
+        "Gerenciar múltiplos projetos é mais fácil com FocusTimer. Posso dedicar tempo focado a cada tarefa e acompanhar minha produtividade entre projetos.",
       avatar: "/placeholder.svg?height=64&width=64",
     },
   ]
@@ -36,9 +36,9 @@ export function TestimonialsSection() {
   return (
     <section id="testimonials" className="py-16">
       <div className="max-w-4xl mx-auto px-6 mb-8">
-        <h2 className="text-3xl font-bold mb-4 text-center">Loved by Productive People</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">Amado por Pessoas Produtivas</h2>
         <p className="text-gray-400 text-center mb-8 max-w-2xl mx-auto">
-          Join thousands of professionals who have boosted their productivity with FocusTimer
+          Junte-se a milhares de profissionais que aumentaram sua produtividade com FocusTimer
         </p>
       </div>
 

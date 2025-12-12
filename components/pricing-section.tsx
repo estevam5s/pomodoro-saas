@@ -5,27 +5,27 @@ import { ShineBorder } from "@/components/ui/shine-border"
 export function PricingSection() {
   const plans = [
     {
-      name: "Free",
-      price: "$0",
-      description: "Perfect for getting started with the Pomodoro technique",
-      features: ["Basic Pomodoro timer", "Task management", "Daily statistics", "Mobile and desktop apps"],
-      buttonText: "Download Free",
+      name: "Gratuito",
+      price: "R$ 0",
+      description: "Perfeito para começar com a técnica Pomodoro",
+      features: ["Timer Pomodoro básico", "Gerenciamento de tarefas", "Estatísticas diárias", "Apps mobile e desktop"],
+      buttonText: "Baixar Grátis",
       buttonVariant: "outline",
     },
     {
       name: "Pro",
-      price: "$4.99",
-      period: "per month",
-      description: "Advanced features for serious productivity enthusiasts",
+      price: "R$ 24,90",
+      period: "por mês",
+      description: "Recursos avançados para entusiastas sérios de produtividade",
       features: [
-        "Everything in Free",
-        "Custom timer durations",
-        "Advanced analytics",
-        "Calendar integration",
-        "Website blocker",
-        "Priority support",
+        "Tudo do Gratuito",
+        "Durações de timer personalizadas",
+        "Análises avançadas",
+        "Integração com calendário",
+        "Bloqueador de sites",
+        "Suporte prioritário",
       ],
-      buttonText: "Get Pro",
+      buttonText: "Obter Pro",
       buttonVariant: "default",
       highlight: true,
     },
@@ -34,9 +34,9 @@ export function PricingSection() {
   return (
     <section id="pricing" className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center">Simple, Transparent Pricing</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">Preços Simples e Transparentes</h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Choose the plan that fits your productivity needs
+          Escolha o plano que se adapta às suas necessidades de produtividade
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">

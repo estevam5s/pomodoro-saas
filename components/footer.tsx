@@ -18,8 +18,8 @@ export function Footer() {
               <span className="font-medium text-white">FocusTimer</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
-              FocusTimer helps you stay productive with the proven Pomodoro technique. Work in focused sprints, take
-              regular breaks, and track your progress to achieve more every day.
+              FocusTimer ajuda você a se manter produtivo com a comprovada técnica Pomodoro. Trabalhe em sprints focados, faça
+              pausas regulares e acompanhe seu progresso para conquistar mais todos os dias.
             </p>
             <div className="flex gap-4">
               <Button
@@ -47,37 +47,37 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Product</h3>
+            <h3 className="font-semibold mb-4">Produto</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#features" className="text-gray-400 hover:text-white">
-                  Features
+                  Recursos
                 </Link>
               </li>
               <li>
                 <Link href="#pricing" className="text-gray-400 hover:text-white">
-                  Pricing
+                  Preços
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  Download
+                  Baixar
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  What's New
+                  Novidades
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3 className="font-semibold mb-4">Empresa</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  About
+                  Sobre
                 </Link>
               </li>
               <li>
@@ -87,22 +87,22 @@ export function Footer() {
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  Careers
+                  Carreiras
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  Contact
+                  Contato
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  Privacy Policy
+                  Política de Privacidade
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-gray-400 hover:text-white">
-                  Terms of Service
+                  Termos de Serviço
                 </Link>
               </li>
             </ul>
@@ -110,7 +110,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 text-center text-gray-400 text-sm">
-          <p>© {new Date().getFullYear()} FocusTimer. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} FocusTimer. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
