@@ -1,12 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Validar que as variáveis de ambiente estão configuradas
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Faltam as credenciais do Supabase nas variáveis de ambiente')
-}
+// Durante o build, usa valores de fallback para evitar erros
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
 
 // Cliente Supabase para uso geral
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -15,6 +12,13 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
   },
 })
+
+// Função helper para validar configuração no runtime
+export function validateSupabaseConfig() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    throw new Error('Faltam as credenciais do Supabase nas variáveis de ambiente')
+  }
+}
 
 // Types para TypeScript
 export interface Profile {
