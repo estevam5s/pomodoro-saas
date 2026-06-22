@@ -5,8 +5,9 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { InteractiveGrid } from '@/components/ui/interactive-grid'
 import { Button } from '@/components/ui/button'
-import { Play, Pause, RotateCcw, Settings, LogOut, Plus, Check, Trash2, Home, BarChart3, ListTodo, Clock, Calendar, TrendingUp, Award } from 'lucide-react'
-import { supabase, Task, DailyStatistics, PomodoroSession } from '@/lib/supabase'
+import { Play, Pause, RotateCcw, Settings, LogOut, Plus, Check, Trash2, Home, BarChart3, ListTodo, Clock, Calendar, TrendingUp, Award, Crown, Lock } from 'lucide-react'
+import { supabase, Task, DailyStatistics, PomodoroSession, PlanLimits, isAdminEmail } from '@/lib/supabase'
+import { getMySubscription } from '@/lib/billing'
 import Link from 'next/link'
 
 type TabType = 'timer' | 'statistics' | 'tasks' | 'settings'
@@ -38,6 +39,10 @@ export default function DashboardPage() {
   const [editingPreferences, setEditingPreferences] = useState(false)
   const [tempPreferences, setTempPreferences] = useState<any>(null)
 
+  // Plan / gating state
+  const [planName, setPlanName] = useState('Inicial')
+  const [limits, setLimits] = useState<PlanLimits | null>(null)
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/login')
@@ -63,8 +68,17 @@ export default function DashboardPage() {
       loadTodayStats()
       loadWeeklyStats()
       loadAllSessions()
+      loadSubscription()
     }
   }, [user])
+
+  const loadSubscription = async () => {
+    try {
+      const d = await getMySubscription()
+      setPlanName(d.plan?.name || 'Inicial')
+      setLimits((d.plan?.limits as PlanLimits) || null)
+    } catch { /* mantém free */ }
+  }
 
   const loadTasks = async () => {
     if (!user) return
@@ -222,6 +236,11 @@ export default function DashboardPage() {
 
   const addTask = async () => {
     if (!user || !newTaskTitle.trim()) return
+    const activeCount = tasks.filter((t) => !t.completed).length
+    if (limits && limits.tasks !== -1 && activeCount >= limits.tasks) {
+      alert(`Seu plano ${planName} permite até ${limits.tasks} tarefas ativas. Faça upgrade em "Meu plano" para adicionar mais.`)
+      return
+    }
     const { data } = await supabase
       .from('tasks')
       .insert({
@@ -307,8 +326,29 @@ export default function DashboardPage() {
               <h1 className="text-xl font-bold text-white">FocusTimer</h1>
               <p className="text-sm text-gray-400">Olá, {profile?.full_name || 'Usuário'}</p>
             </div>
+            <Link href="/dashboard/billing" className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-white transition">
+              <Crown className="w-3.5 h-3.5 text-orange-400" /> {planName}
+            </Link>
           </div>
           <div className="flex items-center gap-4">
+            {isAdminEmail(user?.email) && (
+              <Link href="/admin">
+                <Button
+                  variant="outline"
+                  className="border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-white hidden sm:inline-flex"
+                >
+                  <Lock className="w-4 h-4 mr-2 text-red-400" /> Admin
+                </Button>
+              </Link>
+            )}
+            <Link href="/dashboard/billing">
+              <Button
+                variant="outline"
+                className="border-white/10 bg-white/5 hover:bg-white/10 text-white hidden sm:inline-flex"
+              >
+                <Crown className="w-4 h-4 mr-2 text-orange-400" /> Meu plano
+              </Button>
+            </Link>
             <Link href="/">
               <Button
                 variant="outline"

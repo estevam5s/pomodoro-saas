@@ -141,3 +141,10 @@ storybook-static
 # Documentation build
 /docs/.vitepress/cache
 /docs/.vitepress/dist
+
+# next-pwa generated
+public/sw.js
+public/sw.js.map
+public/workbox-*.js
+public/workbox-*.js.map
+public/fallback-*.js

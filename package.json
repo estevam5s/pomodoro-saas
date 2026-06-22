@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "next start -p 2999",
     "generate:icons": "node scripts/generate-icons.js",
-    "postinstall": "bun run generate:icons"
+    "postinstall": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -61,6 +61,7 @@
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.4",
     "sonner": "^1.7.4",
+    "stripe": "^17.7.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.2",
@@ -70,6 +71,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "babel-loader": "^10.1.1",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"

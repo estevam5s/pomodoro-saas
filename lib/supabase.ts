@@ -71,6 +71,63 @@ export interface DailyStatistics {
   updated_at: string
 }
 
+export interface PlanLimits {
+  projects: number
+  tasks: number
+  history_days: number
+  devices: number
+  presets: number
+  advanced_stats?: boolean
+  blocker?: boolean
+  calendar?: boolean
+  export?: string | false
+  seats?: number
+  admin?: boolean
+  api?: boolean
+}
+
+export interface Plan {
+  id: string
+  slug: 'free' | 'starter' | 'pro' | 'enterprise'
+  name: string
+  description: string | null
+  price_month: number
+  price_year: number
+  stripe_price_month: string | null
+  stripe_price_year: string | null
+  features: string[]
+  limits: PlanLimits
+  per_seat: boolean
+  highlighted: boolean
+  sort: number
+  active: boolean
+}
+
+export interface Subscription {
+  id: string
+  user_id: string
+  plan_slug: 'free' | 'starter' | 'pro' | 'enterprise'
+  status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete'
+  cycle: 'month' | 'year'
+  seats: number
+  stripe_customer_id: string | null
+  stripe_subscription_id: string | null
+  current_period_end: string | null
+  cancel_at_period_end: boolean
+  trial_end: string | null
+  created_at: string
+  updated_at: string
+}
+
+export const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
+  .split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
+export const isAdminEmail = (email?: string | null) =>
+  !!email && ADMIN_EMAILS.includes(email.toLowerCase())
+
+export const brl = (cents: number) =>
+  (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+export const isUnlimited = (n: number) => n === -1 || n === null || n === undefined
+
 export interface Task {
   id: string
   user_id: string
