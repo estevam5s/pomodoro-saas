@@ -1,4 +1,10 @@
-const sharp = require('sharp');
+let sharp;
+try {
+  sharp = require('sharp');
+} catch (e) {
+  console.log('⏭️  sharp indisponível — ícones PWA já versionados em public/, pulando geração.');
+  process.exit(0);
+}
 const fs = require('fs');
 const path = require('path');
 

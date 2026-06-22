@@ -7,8 +7,7 @@
     "dev": "next dev -p 2999",
     "lint": "eslint .",
     "start": "next start -p 2999",
-    "generate:icons": "node scripts/generate-icons.js",
-    "postinstall": "node scripts/generate-icons.js"
+    "generate:icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
