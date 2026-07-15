@@ -9,12 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 6V12L16 14" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                  <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2" />
-                </svg>
-              </div>
+              <img src="/brand-logo.png" alt="FocusTimer" className="w-8 h-8 rounded-full object-contain" />
               <span className="font-medium text-white">FocusTimer</span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">

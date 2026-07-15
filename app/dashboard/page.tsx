@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { InteractiveGrid } from '@/components/ui/interactive-grid'
 import { Button } from '@/components/ui/button'
-import { Play, Pause, RotateCcw, Settings, LogOut, Plus, Check, Trash2, Home, BarChart3, ListTodo, Clock, Calendar, TrendingUp, Award, Crown, Lock } from 'lucide-react'
+import { Play, Pause, RotateCcw, Settings, LogOut, Plus, Check, Trash2, Home, BarChart3, ListTodo, Clock, Calendar, TrendingUp, Award, Crown, Lock, ChevronLeft, Menu } from 'lucide-react'
 import { supabase, Task, DailyStatistics, PomodoroSession, PlanLimits, isAdminEmail } from '@/lib/supabase'
 import { getMySubscription } from '@/lib/billing'
 import Link from 'next/link'
@@ -18,6 +18,18 @@ export default function DashboardPage() {
 
   // Navigation
   const [activeTab, setActiveTab] = useState<TabType>('timer')
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
+  useEffect(() => {
+    try { setSidebarCollapsed(localStorage.getItem('focustimer-sidebar-collapsed') === '1') } catch { /* noop */ }
+  }, [])
+
+  const toggleSidebar = () => setSidebarCollapsed((prev) => {
+    const next = !prev
+    try { localStorage.setItem('focustimer-sidebar-collapsed', next ? '1' : '0') } catch { /* noop */ }
+    return next
+  })
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState(25 * 60)
@@ -311,117 +323,102 @@ export default function DashboardPage() {
     )
   }
 
+  const NAV_TABS: { key: TabType; label: string; icon: typeof Clock }[] = [
+    { key: 'timer', label: 'Timer', icon: Clock },
+    { key: 'tasks', label: 'Tarefas', icon: ListTodo },
+    { key: 'statistics', label: 'Estatísticas', icon: BarChart3 },
+    { key: 'settings', label: 'Configurações', icon: Settings },
+  ]
+
+  const navBtnClass = (active: boolean) =>
+    `group relative flex items-center rounded-xl text-sm font-medium transition-all ${
+      sidebarCollapsed ? 'justify-center px-0 h-11 w-11 mx-auto' : 'gap-3 px-3.5 py-2.5'
+    } ${active ? 'bg-gradient-to-r from-red-500/20 to-orange-500/20 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`
+
+  const SidebarInner = (
+    <>
+      {/* Marca + esconder/mostrar */}
+      <div className={`flex items-center ${sidebarCollapsed ? 'justify-center' : 'justify-between'} gap-2 px-1 pb-4`}>
+        <Link href="/dashboard" className="flex items-center gap-2.5" onClick={() => setMobileNavOpen(false)}>
+          <img src="/brand-logo.png" alt="FocusTimer" className="w-9 h-9 shrink-0 rounded-xl object-contain" />
+          {!sidebarCollapsed && <span className="text-lg font-bold text-white">FocusTimer</span>}
+        </Link>
+        {!sidebarCollapsed && (
+          <button onClick={toggleSidebar} title="Esconder rotas" aria-label="Esconder rotas"
+            className="hidden lg:flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-white/10 hover:text-white">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+        )}
+      </div>
+      {sidebarCollapsed && (
+        <button onClick={toggleSidebar} title="Mostrar rotas" aria-label="Mostrar rotas"
+          className="hidden lg:flex mx-auto mb-2 h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:bg-white/10 hover:text-white">
+          <Menu className="w-4 h-4" />
+        </button>
+      )}
+
+      {!sidebarCollapsed && (
+        <Link href="/dashboard/billing" onClick={() => setMobileNavOpen(false)}
+          className="mb-4 inline-flex items-center gap-1.5 self-start rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10">
+          <Crown className="w-3.5 h-3.5 text-orange-400" /> {planName}
+        </Link>
+      )}
+
+      {/* Navegação principal */}
+      <nav className="flex-1 space-y-1 overflow-y-auto">
+        {!sidebarCollapsed && <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-500">Menu</p>}
+        {NAV_TABS.map(({ key, label, icon: Icon }) => (
+          <button key={key} onClick={() => { setActiveTab(key); setMobileNavOpen(false) }} title={sidebarCollapsed ? label : undefined} className={navBtnClass(activeTab === key)}>
+            {activeTab === key && !sidebarCollapsed && <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-red-500" />}
+            <Icon className="w-[18px] h-[18px] shrink-0" />
+            {!sidebarCollapsed && label}
+          </button>
+        ))}
+      </nav>
+
+      {/* Rodapé — plano/admin, config, voltar, sair */}
+      <div className="space-y-1 border-t border-white/10 pt-3">
+        {isAdminEmail(user?.email) && (
+          <Link href="/admin" onClick={() => setMobileNavOpen(false)} title="Admin" className={navBtnClass(false)}>
+            <Lock className="w-[18px] h-[18px] shrink-0 text-red-400" /> {!sidebarCollapsed && 'Admin'}
+          </Link>
+        )}
+        <Link href="/dashboard/billing" onClick={() => setMobileNavOpen(false)} title="Meu plano" className={navBtnClass(false)}>
+          <Crown className="w-[18px] h-[18px] shrink-0 text-orange-400" /> {!sidebarCollapsed && 'Meu plano'}
+        </Link>
+        <button onClick={() => { setActiveTab('settings'); setMobileNavOpen(false) }} title="Configurações" className={navBtnClass(false) + ' w-full'}>
+          <Settings className="w-[18px] h-[18px] shrink-0" /> {!sidebarCollapsed && 'Configurações'}
+        </button>
+        <Link href="/" onClick={() => setMobileNavOpen(false)} title="Voltar ao site" className={navBtnClass(false)}>
+          <Home className="w-[18px] h-[18px] shrink-0" /> {!sidebarCollapsed && 'Voltar ao site'}
+        </Link>
+        <button onClick={signOut} title="Sair" className={navBtnClass(false) + ' w-full text-gray-400 hover:!bg-red-500/10 hover:!text-red-400'}>
+          <LogOut className="w-[18px] h-[18px] shrink-0" /> {!sidebarCollapsed && 'Sair'}
+        </button>
+      </div>
+    </>
+  )
+
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden flex">
       <InteractiveGrid containerClassName="absolute inset-0" className="opacity-30" points={40} />
 
-      {/* Header */}
-      <header className="relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <Clock className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-white">FocusTimer</h1>
-              <p className="text-sm text-gray-400">Olá, {profile?.full_name || 'Usuário'}</p>
-            </div>
-            <Link href="/dashboard/billing" className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-white transition">
-              <Crown className="w-3.5 h-3.5 text-orange-400" /> {planName}
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            {isAdminEmail(user?.email) && (
-              <Link href="/admin">
-                <Button
-                  variant="outline"
-                  className="border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-white hidden sm:inline-flex"
-                >
-                  <Lock className="w-4 h-4 mr-2 text-red-400" /> Admin
-                </Button>
-              </Link>
-            )}
-            <Link href="/dashboard/billing">
-              <Button
-                variant="outline"
-                className="border-white/10 bg-white/5 hover:bg-white/10 text-white hidden sm:inline-flex"
-              >
-                <Crown className="w-4 h-4 mr-2 text-orange-400" /> Meu plano
-              </Button>
-            </Link>
-            <Link href="/">
-              <Button
-                variant="outline"
-                size="icon"
-                className="border-white/10 bg-white/5 hover:bg-white/10 text-white"
-              >
-                <Home className="w-4 h-4" />
-              </Button>
-            </Link>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={signOut}
-              className="border-white/10 bg-white/5 hover:bg-white/10 text-white"
-            >
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
+      {/* Sidebar desktop */}
+      <aside className={`relative z-20 hidden lg:flex flex-col shrink-0 border-r border-white/10 bg-black/50 backdrop-blur-xl p-4 sticky top-0 h-screen transition-[width] duration-300 ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        {SidebarInner}
+      </aside>
 
-        {/* Navigation Tabs */}
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1 border-t border-white/10">
-            <button
-              onClick={() => setActiveTab('timer')}
-              className={`px-6 py-3 text-sm font-medium transition-all ${
-                activeTab === 'timer'
-                  ? 'text-white border-b-2 border-red-500'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Clock className="w-4 h-4 inline mr-2" />
-              Timer
-            </button>
-            <button
-              onClick={() => setActiveTab('tasks')}
-              className={`px-6 py-3 text-sm font-medium transition-all ${
-                activeTab === 'tasks'
-                  ? 'text-white border-b-2 border-red-500'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <ListTodo className="w-4 h-4 inline mr-2" />
-              Tarefas
-            </button>
-            <button
-              onClick={() => setActiveTab('statistics')}
-              className={`px-6 py-3 text-sm font-medium transition-all ${
-                activeTab === 'statistics'
-                  ? 'text-white border-b-2 border-red-500'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <BarChart3 className="w-4 h-4 inline mr-2" />
-              Estatísticas
-            </button>
-            <button
-              onClick={() => setActiveTab('settings')}
-              className={`px-6 py-3 text-sm font-medium transition-all ${
-                activeTab === 'settings'
-                  ? 'text-white border-b-2 border-red-500'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Settings className="w-4 h-4 inline mr-2" />
-              Configurações
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Drawer mobile */}
+      <button onClick={() => setMobileNavOpen(true)} aria-label="Abrir menu" className="lg:hidden fixed top-4 left-4 z-30 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/70 text-white backdrop-blur">
+        <Menu className="w-5 h-5" />
+      </button>
+      {mobileNavOpen && <div className="lg:hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm" onClick={() => setMobileNavOpen(false)} />}
+      <aside className={`lg:hidden fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-white/10 bg-black p-4 transition-transform duration-300 ${mobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        {SidebarInner}
+      </aside>
 
       {/* Main content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+      <main className="relative z-10 flex-1 min-w-0 mx-auto max-w-7xl w-full px-6 py-8 pt-16 lg:pt-8">
         {/* TIMER TAB */}
         {activeTab === 'timer' && (
           <div className="grid lg:grid-cols-3 gap-6">

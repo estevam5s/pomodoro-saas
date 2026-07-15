@@ -61,7 +61,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://saas-chat.ucpvkj.easypanel.host",
               "frame-src https://js.stripe.com https://hooks.stripe.com",
               "frame-ancestors 'self'",
               "base-uri 'self'",

@@ -40,8 +40,8 @@ export async function POST(req: Request) {
     success_url: `${site}/dashboard/billing?success=1`,
     cancel_url: `${site}/dashboard/billing?canceled=1`,
     allow_promotion_codes: true,
-    subscription_data: { metadata: { user_id: user.id, slug } },
-    metadata: { user_id: user.id, slug, cycle: cycle || 'month' },
+    subscription_data: { metadata: { user_id: user.id, slug, app: 'focustimer' } },
+    metadata: { user_id: user.id, slug, cycle: cycle || 'month', app: 'focustimer' },
   })
 
   return NextResponse.json({ url: session.url })

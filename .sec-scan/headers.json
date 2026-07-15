@@ -1,0 +1,14 @@
+[
+  {
+    "type": "header",
+    "severity": "low",
+    "name": "CSP fraca",
+    "note": "CSP permite unsafe-inline/eval sem nonce"
+  },
+  {
+    "type": "header",
+    "severity": "low",
+    "name": "CORS aberto",
+    "note": "ACAO=* "
+  }
+]

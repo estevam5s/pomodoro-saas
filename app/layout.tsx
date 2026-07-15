@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next"
+import ChatWidgetMount from "@/components/ChatWidgetMount";
+import { ScrollFX } from "@/components/scroll-fx";
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type React from "react"
@@ -64,15 +66,7 @@ export const metadata: Metadata = {
     images: ["/saas.png"],
     creator: "@focustimer",
   },
-  icons: {
-    icon: [
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
+  icons: { icon: "/brand-logo.png", shortcut: "/brand-logo.png", apple: "/brand-logo.png" },
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -102,12 +96,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-black text-white antialiased`}>
+      <body className={`${inter.className} bg-black text-white antialiased`}><ScrollFX />
         <AuthProvider>
           {children}
           <PWAInstallPrompt />
         </AuthProvider>
-      </body>
+      <ChatWidgetMount appName="FocusTimer" accent="#ef4444" /></body>
     </html>
   )
 }

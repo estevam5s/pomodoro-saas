@@ -1,0 +1,20 @@
+[
+  {
+    "type": "supabase",
+    "severity": "info",
+    "name": "Tabela acessível (0 linhas): profiles",
+    "note": "200 sem linhas — RLS provavelmente OK (ou vazia)"
+  },
+  {
+    "type": "supabase",
+    "severity": "info",
+    "name": "Tabela acessível (0 linhas): subscriptions",
+    "note": "200 sem linhas — RLS provavelmente OK (ou vazia)"
+  },
+  {
+    "type": "supabase",
+    "severity": "info",
+    "name": "Resumo Supabase",
+    "note": "2 tabelas candidatas acessíveis, 0 com LEITURA anônima de dados"
+  }
+]

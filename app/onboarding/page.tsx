@@ -56,18 +56,23 @@ export default function OnboardingPage() {
     setLoading(true)
 
     try {
-      // Salvar preferências no banco
-      const { error } = await supabase.from('user_preferences').insert({
-        user_id: user.id,
-        project_type: formData.projectType,
-        main_project: formData.mainProject,
-        work_duration: formData.workDuration,
-        short_break_duration: formData.shortBreakDuration,
-        long_break_duration: formData.longBreakDuration,
-        daily_goal: formData.dailyGoal,
-        enable_notifications: formData.enableNotifications,
-        enable_sound: formData.enableSound,
-      })
+      // Salvar preferências no banco. upsert (não insert) para não dar 409 se o
+      // usuário já tiver uma linha (refresh, onboarding refeito) — UNIQUE(user_id).
+      const { error } = await supabase.from('user_preferences').upsert(
+        {
+          user_id: user.id,
+          project_type: formData.projectType,
+          main_project: formData.mainProject,
+          work_duration: formData.workDuration,
+          short_break_duration: formData.shortBreakDuration,
+          long_break_duration: formData.longBreakDuration,
+          daily_goal: formData.dailyGoal,
+          enable_notifications: formData.enableNotifications,
+          enable_sound: formData.enableSound,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' },
+      )
 
       if (error) throw error
 

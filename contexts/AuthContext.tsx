@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { User, Session } from '@supabase/supabase-js'
 import { supabase, Profile, UserPreferences } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { TfaGuard } from '@/components/TfaGuard'
 
 interface AuthContextType {
   user: User | null
@@ -13,6 +14,7 @@ interface AuthContextType {
   loading: boolean
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>
   signIn: (email: string, password: string) => Promise<{ error: any }>
+  signInWithGoogle: () => Promise<{ error: any }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Profile>) => Promise<void>
   updatePreferences: (updates: Partial<UserPreferences>) => Promise<void>
@@ -146,6 +148,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  // Login com Google (OAuth)
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: `${window.location.origin}/dashboard` } })
+      return { error }
+    } catch (error) {
+      return { error }
+    }
+  }
+
   // Logout
   const signOut = async () => {
     await supabase.auth.signOut()
@@ -191,13 +203,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loading,
     signUp,
     signIn,
+    signInWithGoogle,
     signOut,
     updateProfile,
     updatePreferences,
     refreshPreferences,
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={value}><TfaGuard email={user?.email} />{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
