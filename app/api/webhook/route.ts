@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server'
 import { admin, stripe } from '@/lib/server'
+import { notifyCancellation, notifyDunning } from '@/lib/notify-email'
 
 export const dynamic = 'force-dynamic'
+
+async function emailForCustomer(db: any, customerId?: string): Promise<string | null> {
+  try {
+    if (!customerId) return null
+    const { data: sub } = await db.from('subscriptions').select('user_id').eq('stripe_customer_id', customerId).maybeSingle()
+    if (!sub?.user_id) return null
+    const { data } = await db.auth.admin.getUserById(sub.user_id)
+    return data?.user?.email || null
+  } catch { return null }
+}
 
 export async function POST(req: Request) {
   const sig = req.headers.get('stripe-signature') || ''
@@ -78,6 +89,13 @@ export async function POST(req: Request) {
         if (slug) updates.plan_slug = slug
       }
       await db.from('subscriptions').update(updates).eq('stripe_customer_id', customer)
+      if (event.type === 'customer.subscription.deleted') {
+        emailForCustomer(db, customer).then((to) => to && notifyCancellation(to)).catch(() => {})
+      }
+    } else if (event.type === 'invoice.payment_failed') {
+      const inv = event.data.object
+      if (inv.customer) await db.from('subscriptions').update({ status: 'past_due', updated_at: new Date().toISOString() }).eq('stripe_customer_id', inv.customer)
+      emailForCustomer(db, inv.customer).then((to) => to && notifyDunning(to)).catch(() => {})
     }
 
     await db.from('payment_events').insert({ id: event.id, type: event.type, payload: event })
