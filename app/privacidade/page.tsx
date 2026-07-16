@@ -1,0 +1,5 @@
+import Link from "next/link";
+export const metadata = { title: "Política de Privacidade" };
+export default function LegalPage() {
+  return (<main className="mx-auto max-w-3xl px-6 py-16"><Link href="/" className="text-sm text-red-500">&larr; Voltar ao início</Link><h1 className="mt-6 text-3xl font-bold">Política de Privacidade</h1><p className="mt-2 text-sm text-muted-foreground">Última atualização: julho de 2026</p><div className="mt-8 space-y-6 leading-relaxed text-muted-foreground"><p>Coletamos dados de cadastro e de uso para operar e melhorar o serviço, com base legal adequada.</p><p>Usamos cookies essenciais e, com consentimento, de análise, gerenciáveis pelo aviso de cookies.</p><p>Não vendemos seus dados; compartilhamos apenas com provedores necessários (hospedagem, pagamentos).</p><p>Adotamos medidas de segurança, incluindo tráfego criptografado (SSL/TLS).</p><p>Conforme a LGPD, você pode acessar, corrigir, portar ou excluir dados e revogar consentimentos.</p></div><p className="mt-10 text-sm text-muted-foreground">Conexão protegida por SSL. Em conformidade com a LGPD (Lei nº 13.709/2018).</p></main>);
+}

@@ -69,6 +69,15 @@ export async function GET(req: Request) {
     return NextResponse.json({ logs: logs || [] })
   }
 
+  if (module === 'feedback') {
+    const { data: items } = await db
+      .from('feedback')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(300)
+    return NextResponse.json({ items: items || [] })
+  }
+
   if (module === 'health') {
     return NextResponse.json({
       ok: true,

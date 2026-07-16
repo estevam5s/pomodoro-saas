@@ -1,0 +1,5 @@
+import Link from "next/link";
+export const metadata = { title: "Termos de Uso" };
+export default function LegalPage() {
+  return (<main className="mx-auto max-w-3xl px-6 py-16"><Link href="/" className="text-sm text-red-500">&larr; Voltar ao início</Link><h1 className="mt-6 text-3xl font-bold">Termos de Uso</h1><p className="mt-2 text-sm text-muted-foreground">Última atualização: julho de 2026</p><div className="mt-8 space-y-6 leading-relaxed text-muted-foreground"><p>Ao utilizar a plataforma você concorda com estes Termos de Uso e com a Política de Privacidade.</p><p>A plataforma oferece preparação para produtividade: timer Pomodoro, estatísticas e foco. Recursos podem mudar.</p><p>Você é responsável pela sua conta e credenciais. É proibido uso ilícito ou que comprometa o serviço.</p><p>Alguns recursos exigem assinatura; valores e cancelamento são informados na contratação.</p><p>O serviço é fornecido no estado em que se encontra, sem garantia de aprovação.</p></div><p className="mt-10 text-sm text-muted-foreground">Conexão protegida por SSL. Em conformidade com a LGPD (Lei nº 13.709/2018).</p></main>);
+}

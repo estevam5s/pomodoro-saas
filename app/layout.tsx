@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import ChatWidgetMount from "@/components/ChatWidgetMount";
 import { ScrollFX } from "@/components/scroll-fx";
+import { CookieConsent } from "@/components/cookie-consent";
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type React from "react"
@@ -101,7 +102,8 @@ export default function RootLayout({
           {children}
           <PWAInstallPrompt />
         </AuthProvider>
-      <ChatWidgetMount appName="FocusTimer" accent="#ef4444" /></body>
+      <ChatWidgetMount appName="FocusTimer" accent="#ef4444" />
+        <CookieConsent /></body>
     </html>
   )
 }

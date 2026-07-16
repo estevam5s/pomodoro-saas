@@ -6,6 +6,7 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { PricingSection } from "@/components/pricing-section"
 import { FaqSection } from "@/components/faq-section"
 import { Footer } from "@/components/footer"
+import { FeedbackWidget } from "@/components/feedback-widget"
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <PricingSection />
       <FaqSection />
       <Footer />
+      <FeedbackWidget />
     </main>
   )
 }
