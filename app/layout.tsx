@@ -90,14 +90,31 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
-export default function RootLayout({
+async function getBrandStyle(): Promise<string> {
+  try {
+    const { createClient } = await import("@supabase/supabase-js")
+    const sb = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+      process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+      { auth: { autoRefreshToken: false, persistSession: false } },
+    )
+    const { data } = await sb.from("brand_settings").select("*").eq("id", 1).maybeSingle()
+    const b: any = data || {}
+    return `:root{--logo-site-px:${b.logo_site_px ?? 40}px;--logo-login-px:${b.logo_login_px ?? 48}px;--logo-dashboard-px:${b.logo_dashboard_px ?? 36}px;--logo-admin-px:${b.logo_admin_px ?? 36}px;--favicon-px:${b.favicon_px ?? 32}px;}`
+  } catch {
+    return ":root{--logo-site-px:40px;--logo-login-px:48px;--logo-dashboard-px:36px;--logo-admin-px:36px;--favicon-px:32px;}"
+  }
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const brandStyle = await getBrandStyle()
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-black text-white antialiased`}><ScrollFX />
+      <body className={`${inter.className} bg-black text-white antialiased`}><style dangerouslySetInnerHTML={{ __html: brandStyle }} /><ScrollFX />
         <AuthProvider>
           {children}
           <PWAInstallPrompt />
